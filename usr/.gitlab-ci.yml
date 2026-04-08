@@ -1,0 +1,43 @@
+stages:
+  - RunMake
+  - RunTest
+  - RunPackage
+
+make_job:
+  stage: RunMake
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update
+    - apt-get install -y build-essential
+  script:
+    - chmod +x cicd/build.sh
+    - ./cicd/build.sh
+  artifacts:
+    paths:
+      - usr/bin/wordcount
+    expire_in: 1 week
+
+test_job:
+  stage: RunTest
+  image: ubuntu:22.04
+  script:
+    - chmod +x cicd/test.sh
+    - ./cicd/test.sh
+  dependencies:
+    - build_job
+
+package_job:
+  stage: RunPackage
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update
+    - apt-get install -y dpkg-dev
+  script:
+    - chmod +x cicd/package.sh
+    - ./cicd/package.sh
+  artifacts:
+    paths:
+      - wordcount-1.0.deb
+    expire_in: 1 week
+  dependencies:
+    - build_job

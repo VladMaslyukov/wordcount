@@ -1,0 +1,6 @@
+*.o
+*.deb
+wordcount
+usr/bin/
+.vscode/
+.idea/
