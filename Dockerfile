@@ -17,3 +17,8 @@ RUN apt-get update && \
 # Запускаем программу с тестовой строкой
 # Входные данные передаём через echo
 CMD echo "hello my world" | wordcount
+
+# Добавляем проверку и исправление прав
+RUN which wordcount && chmod +x $(which wordcount)
+
+CMD echo "hello my world" | wordcount
