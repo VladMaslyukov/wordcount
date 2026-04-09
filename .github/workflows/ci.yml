@@ -3,6 +3,8 @@ name: CI/CD PipSeline for WordCount
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ "main" ]
   # Добавляем возможность запускать пайплайн вручную
